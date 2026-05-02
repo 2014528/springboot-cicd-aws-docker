@@ -16,7 +16,6 @@ This is a **Task Management API** with authentication using JWT.
 
 The CI/CD pipeline:
 
-```text
 Push code → Build app → Create Docker image → Push to Docker Hub﻿# Spring Boot CI/CD Pipeline Project
 
 Tech Stack
