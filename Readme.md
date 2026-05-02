@@ -39,7 +39,7 @@ mvn spring-boot:run
 3. Test API (Example)
 curl -X POST http://localhost:8080/api/auth/register \
 -H "Content-Type: application/json" \
--d "{\"name\":\"Aman\",\"email\":\"aman@example.com\",\"password\":\"password123\"}"
+-d "{\"name\":\"Abhishek\",\"email\":\"abhi@example.com\",\"password\":\"password123\"}"
 Docker Setup
 Build Image
 docker build -t taskmanagementapi .
@@ -81,10 +81,10 @@ CI/CD Flow
 Developer push → GitHub Actions triggered →
 Build → Docker Image → Push to Docker Hub
 Status
-✔ Local setup complete
-✔ Docker working
-✔ CI/CD pipeline successful
-✔ Docker image pushed to Docker Hub
+ Local setup complete
+ Docker working
+ CI/CD pipeline successful
+ Docker image pushed to Docker Hub
 
 Author
 Abhishek Gautam
