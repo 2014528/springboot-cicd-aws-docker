@@ -25,15 +25,14 @@ jobs:
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
-      # Step 4: Build Docker image
-      - name: Build Docker Image
-        run: docker build -t taskmanagementapi .
+      # Step 4: Login to Docker Hub
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-      # Step 5: Start container, check logs, then stop it
-      - name: Test Docker Image
-        run: |
-          docker run -d -p 8080:8080 --name test-container taskmanagementapi
-          sleep 10
-          docker logs test-container
-          docker stop test-container
-          docker rm test-container
+      # Step 5: Build Docker image with Docker Hub repo name
+      - name: Build Docker Image
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/taskmanagementapi:latest .
+
+      # Step 6: Push Docker image to Docker Hub
+      - name: Push Docker Image
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/taskmanagementapi:latest
