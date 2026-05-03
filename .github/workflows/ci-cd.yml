@@ -10,18 +10,18 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: Checkout code
+      # Step 1: Checkout code from GitHub
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # Step 2: Setup Java
+      # Step 2: Install Java 21
       - name: Set up Java
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '21'
 
-      # Step 3: Build project
+      # Step 3: Build Spring Boot project
       - name: Build with Maven
         run: mvn clean package -DskipTests
 
@@ -29,6 +29,11 @@ jobs:
       - name: Build Docker Image
         run: docker build -t taskmanagementapi .
 
-      # Step 5: Run Docker container (test run)
-      - name: Run Docker Container
-        run: docker run -d -p 8080:8080 taskmanagementapi
+      # Step 5: Start container, check logs, then stop it
+      - name: Test Docker Image
+        run: |
+          docker run -d -p 8080:8080 --name test-container taskmanagementapi
+          sleep 10
+          docker logs test-container
+          docker stop test-container
+          docker rm test-container
