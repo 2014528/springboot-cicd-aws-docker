@@ -1,0 +1,34 @@
+name: Spring Boot CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout code
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Step 2: Setup Java
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      # Step 3: Build project
+      - name: Build with Maven
+        run: mvn clean package -DskipTests
+
+      # Step 4: Build Docker image
+      - name: Build Docker Image
+        run: docker build -t taskmanagementapi .
+
+      # Step 5: Run Docker container (test run)
+      - name: Run Docker Container
+        run: docker run -d -p 8080:8080 taskmanagementapi
